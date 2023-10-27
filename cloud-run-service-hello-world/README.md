@@ -1,6 +1,6 @@
 # Google Cloud Recipe - Cloud Run Service - Hello, World!
 
-A [Hello, World!](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program) [Express](https://expressjs.com/) application served from [Cloud Run](https://cloud.google.com/run/docs/overview/what-is-cloud-run#services), deployed in multiple [regions](https://cloud.google.com/about/locations#regions), behind a [Global HTTP Load Balancer](https://cloud.google.com/compute/docs/instance-groups/adding-an-instance-group-to-a-load-balancer).
+A [Hello, World!](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program) [Express](https://expressjs.com/) web application served from [Cloud Run](https://cloud.google.com/run/docs/overview/what-is-cloud-run#services), deployed in multiple [regions](https://cloud.google.com/about/locations#regions), behind a [Global HTTP Load Balancer](https://cloud.google.com/compute/docs/instance-groups/adding-an-instance-group-to-a-load-balancer).
 
 Provisioned with [terraform](https://www.terraform.io/).
 
