@@ -1,0 +1,42 @@
+{
+  "name": "google-cloud-recipes-cloud-run-service-hello-world",
+  "version": "1.0.0",
+  "description": "Google Cloud Recipe - Cloud Run Service - Hello World!",
+  "private": true,
+  "main": "build/src/index.js",
+  "types": "build/src/index.d.ts",
+  "files": [
+    "build/src"
+  ],
+  "license": "SEE LICENSE IN LICENSE",
+  "keywords": [],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "fix": "gts fix",
+    "start": "ts-node-dev -r dotenv/config src/index.ts",
+    "up": "docker compose up --detach --wait",
+    "up:build": "npm run up -- --build",
+    "down": "docker compose down",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run lint"
+  },
+  "devDependencies": {
+    "@types/bunyan": "^1.8.10",
+    "@types/express": "^4.17.20",
+    "@types/node": "20.8.2",
+    "dotenv": "^16.3.1",
+    "gts": "^5.2.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "~5.2.0"
+  },
+  "dependencies": {
+    "@google-cloud/logging-bunyan": "^5.0.0",
+    "bunyan": "^1.8.15",
+    "express": "^4.18.2",
+    "joi": "^17.11.0"
+  }
+}
