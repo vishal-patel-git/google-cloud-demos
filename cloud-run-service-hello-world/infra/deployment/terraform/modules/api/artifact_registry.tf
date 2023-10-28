@@ -30,4 +30,8 @@ resource "docker_image" "api" {
 
 resource "docker_registry_image" "api" {
   name = docker_image.api.name
+
+  triggers = {
+    docker_image_repo_digest = docker_image.api.repo_digest
+  }
 }

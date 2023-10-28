@@ -1,7 +1,3 @@
-locals {
-  global_http_load_balancer_ip_address = join("", google_compute_global_address.global_http_load_balancer.*.address)
-}
-
 provider "google" {
   project               = var.project_id
   region                = "northamerica-northeast1"
@@ -68,8 +64,8 @@ resource "google_compute_global_address" "global_http_load_balancer" {
 module "global_http_load_balancer" {
   source = "./modules/global_http_load_balancer"
 
-  domain_names = var.domain_names
-  ip_address   = local.global_http_load_balancer_ip_address
+  domain_names                     = var.domain_names
+  google_compute_global_address_id = google_compute_global_address.global_http_load_balancer.id
   api_cloud_run_services_names = {
     northamerica-northeast1 = {
       name = module.api.api_cloud_run_services_names.northamerica-northeast1.name

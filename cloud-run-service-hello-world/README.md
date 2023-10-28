@@ -8,6 +8,24 @@ Provisioned with [terraform](https://www.terraform.io/).
 
 ![architecture diagram](./architecture-diagram.svg)
 
+## Components
+
+### API
+
+#### Endpoints
+
+##### `GET /`
+
+##### Responses
+
+###### 200 OK
+
+```json
+{
+  "message": "Hello, World!"
+}
+```
+
 ## Deployment
 
 1. Make sure to own a [Domain Name](https://en.wikipedia.org/wiki/Domain_name) or have access to it's DNS configuration. You will need to create an [A record](https://support.google.com/a/answer/2576578?hl=en#zippy=%2Cconfigure-a-records-now) to set up HTTPS at the end of the deployment.

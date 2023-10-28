@@ -1,5 +1,5 @@
 output "global_http_load_balancer_ip_address" {
-  value = local.global_http_load_balancer_ip_address
+  value = google_compute_global_address.global_http_load_balancer.address
 }
 
 output "global_http_load_balancer_ssl_certificate_name" {

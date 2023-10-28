@@ -65,7 +65,7 @@ resource "google_compute_global_forwarding_rule" "lb_default" {
   name                  = "${local.service_name}-lb-fr"
   load_balancing_scheme = "EXTERNAL_MANAGED"
   target                = google_compute_target_https_proxy.lb_default.id
-  ip_address            = var.ip_address
+  ip_address            = var.google_compute_global_address_id
   port_range            = "443"
   depends_on            = [google_compute_target_https_proxy.lb_default]
 }

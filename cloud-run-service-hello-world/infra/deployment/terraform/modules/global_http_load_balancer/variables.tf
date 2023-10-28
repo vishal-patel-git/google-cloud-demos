@@ -3,9 +3,9 @@ variable "domain_names" {
   description = "Domains for which a managed SSL certificate will be valid."
 }
 
-variable "ip_address" {
+variable "google_compute_global_address_id" {
   type        = string
-  description = "The Global HTTP Load Balancer IP address."
+  description = "The Global HTTP Load Balancer IP address ID."
 }
 
 variable "api_cloud_run_services_names" {
