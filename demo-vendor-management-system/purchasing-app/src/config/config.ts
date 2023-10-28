@@ -8,6 +8,11 @@ const envVarsSchema = Joi.object()
     NODE_ENV: Joi.string()
       .valid(NodeEnv.Development, NodeEnv.Test, NodeEnv.Production)
       .required(),
+    PGHOST: Joi.string().required(),
+    PGPORT: Joi.number().integer().required(),
+    PGDATABASE: Joi.string().required(),
+    PGUSERNAME: Joi.string().required(),
+    PGPASSWORD: Joi.string().required(),
     PORT: Joi.number().integer().required(),
   })
   .unknown();
@@ -19,6 +24,13 @@ if (error) {
 }
 
 const config = {
+  db: {
+    host: envVars.PGHOST,
+    port: envVars.PGPORT,
+    database: envVars.PGDATABASE,
+    username: envVars.PGUSERNAME,
+    password: envVars.PGPASSWORD,
+  },
   googleCloud: {
     appEngine: {
       serviceName: envVars.GAE_SERVICE,
