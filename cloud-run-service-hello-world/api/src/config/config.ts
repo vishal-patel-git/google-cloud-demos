@@ -21,7 +21,7 @@ if (error) {
 const config = {
   googleCloud: {
     run: {
-      service: envVars.K_SERVICE,
+      serviceName: envVars.K_SERVICE,
     },
   },
   logLevel: envVars.LOG_LEVEL,

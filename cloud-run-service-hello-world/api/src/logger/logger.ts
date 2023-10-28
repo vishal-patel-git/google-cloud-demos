@@ -4,7 +4,7 @@ import {config} from '../config';
 import {NodeEnv} from '../common/enums';
 
 const logger = bunyan.createLogger({
-  name: config.googleCloud.run.service,
+  name: config.googleCloud.run.serviceName,
   level: config.logLevel,
   streams: [],
 });
