@@ -7,6 +7,6 @@ app.listen(config.port, async () => {
   await db.migrate.latest();
 
   logger.info(
-    `Google Cloud Recipes - Demo - Vendor Management System - Purchasing App server listening on port ${config.port}...`
+    `Google Cloud Recipes - Demo - Vendor Management System - Supplier Management App server listening on port ${config.port}...`
   );
 });

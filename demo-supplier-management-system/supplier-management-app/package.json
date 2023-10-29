@@ -1,7 +1,7 @@
 {
-  "name": "google-cloud-recipes-demo-vendor-management-system-purchasing-app",
+  "name": "google-cloud-recipes-demo-vendor-management-system-supplier-management-app",
   "version": "1.0.0",
-  "description": "Google Cloud Recipes - Demo - Vendor Management System - Purchasing App",
+  "description": "Google Cloud Recipes - Demo - Vendor Management System - Supplier Management App",
   "private": true,
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",

@@ -1,0 +1,8 @@
+extends ../templates/layout
+
+block layout-content
+  h1 Supplier Management
+    a(href='/suppliers/create')
+    ul
+      each supplier in suppliers
+        li= supplier.name
