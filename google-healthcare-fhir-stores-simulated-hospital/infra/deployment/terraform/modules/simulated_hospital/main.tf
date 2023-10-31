@@ -1,3 +1,6 @@
+data "google_project" "project" {
+}
+
 data "google_compute_zones" "available" {
 }
 
@@ -8,12 +11,31 @@ module "gce_container" {
   container = {
     image = "eu.gcr.io/simhospital-images/simhospital:latest"
     command = [
-      "health/simulator"
+      "health/simulator",
+      "--resource_output=cloud",
+      "--cloud_project_id=${data.google_project.project.project_id}",
+      "--cloud_location=${var.default_healthcare_dataset_location}",
+      "--cloud_dataset=${var.default_healthcare_dataset_id}",
+      "--cloud_datastore=${var.default_fhir_store_id}",
+      "--pathways_per_hour=240"
     ]
   }
 
   restart_policy = "Always"
 }
+
+resource "google_healthcare_dataset_iam_member" "default_dataset_simulated_hospital_sa" {
+  dataset_id = var.default_healthcare_dataset_id
+  role       = "roles/editor"
+  member     = "serviceAccount:${var.simulated_hospital_sa_email}"
+}
+
+resource "google_healthcare_fhir_store_iam_member" "default_fhir_store_simulated_hospital_sa" {
+  fhir_store_id = var.default_fhir_store_id
+  role          = "roles/editor"
+  member        = "serviceAccount:${var.simulated_hospital_sa_email}"
+}
+
 
 module "vm_template" {
   source  = "terraform-google-modules/vm/google//modules/instance_template"
@@ -46,4 +68,9 @@ resource "google_compute_instance_from_template" "vm" {
   zone = data.google_compute_zones.available.names[0]
 
   source_instance_template = module.vm_template.self_link
+
+  depends_on = [
+    google_healthcare_dataset_iam_member.default_dataset_simulated_hospital_sa,
+    google_healthcare_fhir_store_iam_member.default_fhir_store_simulated_hospital_sa
+  ]
 }

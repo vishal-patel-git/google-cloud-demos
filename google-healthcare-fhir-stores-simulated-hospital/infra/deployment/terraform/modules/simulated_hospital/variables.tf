@@ -18,3 +18,18 @@ variable "simulated_hospital_sa_email" {
   description = "Simulated Hospital Service Account email."
 }
 
+variable "default_healthcare_dataset_id" {
+  type        = string
+  description = "Default Healthcare Dataset ID."
+}
+
+variable "default_healthcare_dataset_location" {
+  type        = string
+  description = "Default Healthcare Dataset location."
+}
+
+variable "default_fhir_store_id" {
+  type        = string
+  description = "Default FHIR Store ID."
+}
+

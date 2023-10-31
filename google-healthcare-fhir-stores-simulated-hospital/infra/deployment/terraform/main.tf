@@ -48,6 +48,10 @@ module "network" {
   environment  = var.environment
 }
 
+module "healthcare" {
+  source = "./modules/healthcare"
+}
+
 module "simulated_hospital" {
   source = "./modules/simulated_hospital"
 
@@ -55,4 +59,7 @@ module "simulated_hospital" {
   trust_network_name                            = module.network.trust_network_name
   trust_northamerica_northeast1_subnetwork_name = module.network.trust_northamerica_northeast1_subnetwork_name
   simulated_hospital_sa_email                   = module.iam.simulated_hospital_sa_email
+  default_healthcare_dataset_id                 = module.healthcare.default_dataset_id
+  default_healthcare_dataset_location           = module.healthcare.default_dataset_location
+  default_fhir_store_id                         = module.healthcare.default_fhir_store_id
 }

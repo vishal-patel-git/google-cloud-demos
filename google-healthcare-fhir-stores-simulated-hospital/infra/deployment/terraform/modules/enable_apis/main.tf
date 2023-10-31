@@ -6,6 +6,7 @@ locals {
     "cloudkms.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "compute.googleapis.com",
+    "healthcare.googleapis.com",
     "iam.googleapis.com",
     "secretmanager.googleapis.com",
   ]
