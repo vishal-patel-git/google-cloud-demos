@@ -1,11 +1,36 @@
 import express from 'express';
+import * as lb from '@google-cloud/logging-bunyan';
 import cors from 'cors';
 import helmet from 'helmet';
+import {errorHandler} from './error-handler';
+import {config} from './config';
 
-const app = express();
+async function createApp() {
+  const app = express();
 
-app.use(helmet());
+  const {logger, mw} = await lb.express.middleware({
+    level: config.logLevel,
+  });
 
-app.use(cors());
+  app.use(mw);
 
-export {app};
+  app.use(helmet());
+
+  app.use(cors());
+
+  app.use(
+    async (
+      err: Error,
+      req: express.Request,
+      res: express.Response,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      _next: express.NextFunction
+    ) => {
+      await errorHandler.handleError(err, req, res);
+    }
+  );
+
+  return {app, logger};
+}
+
+export {createApp};
