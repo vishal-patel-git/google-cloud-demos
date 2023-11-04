@@ -1,1 +1,0 @@
-# Google Cloud Demos - Invoice Management System - Vendor Management API
