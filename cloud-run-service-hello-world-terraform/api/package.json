@@ -1,7 +1,7 @@
 {
-  "name": "google-cloud-recipes-cloud-run-service-hello-world",
+  "name": "google-cloud-demos-cloud-run-service-hello-world",
   "version": "1.0.0",
-  "description": "Google Cloud Recipe - Cloud Run Service - Hello World!",
+  "description": "Google Cloud Demos - Cloud Run Service - Hello World!",
   "private": true,
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
