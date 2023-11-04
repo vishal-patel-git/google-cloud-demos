@@ -24,7 +24,7 @@ resource "google_sql_database_instance" "vendors_management_api" {
 }
 
 resource "google_sql_database" "vendors_management_api" {
-  name     = "vendors-management-api"
+  name     = "vendors_management_api"
   instance = google_sql_database_instance.vendors_management_api.name
 }
 
@@ -40,7 +40,7 @@ resource "random_password" "vendors_management_api_user_password" {
 }
 
 resource "google_sql_user" "vendors_management_api" {
-  name     = "vendors-management-api"
+  name     = "vendors_management_api"
   password = random_password.vendors_management_api_user_password.result
   instance = google_sql_database_instance.vendors_management_api.name
 }
