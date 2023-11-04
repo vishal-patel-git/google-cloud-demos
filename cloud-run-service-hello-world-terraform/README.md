@@ -1,6 +1,6 @@
-# Google Cloud Recipe - Cloud Run Service - Hello, World! - Terraform
+# Google Cloud Demo - Cloud Run Service - Hello, World! - Terraform
 
-This recipe uses [terraform](https://www.terraform.io/) to deploy a [Hello, World!](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program) [Express](https://expressjs.com/) web application served from [Google Cloud Run](https://cloud.google.com/run/docs/overview/what-is-cloud-run#services), behind a [Regional External Application Load Balancer](https://cloud.google.com/load-balancing/docs/https). This recipe aims to comply with [data residency](https://en.wikipedia.org/wiki/Data_localization) requirements.
+This demo uses [terraform](https://www.terraform.io/) to deploy a [Hello, World!](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program) [Express](https://expressjs.com/) web application served from [Google Cloud Run](https://cloud.google.com/run/docs/overview/what-is-cloud-run#services), behind a [Regional External Application Load Balancer](https://cloud.google.com/load-balancing/docs/https). It aims to comply with [data residency](https://en.wikipedia.org/wiki/Data_localization) requirements.
 
 See the [story on Medium](https://medium.com/@marcus_monteiro/google-cloud-recipe-cloud-run-service-hello-world-d3b095fcc326).
 
