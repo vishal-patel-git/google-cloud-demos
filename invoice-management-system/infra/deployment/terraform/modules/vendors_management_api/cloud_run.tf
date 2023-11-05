@@ -11,6 +11,12 @@ resource "google_secret_manager_secret_iam_member" "vendors_management_api_sa_ve
   member    = "serviceAccount:${var.vendors_management_api_sa_email}"
 }
 
+resource "google_secret_manager_secret_iam_member" "vendors_management_api_sa_google_maps_api_key" {
+  secret_id = google_secret_manager_secret.google_maps_api_key.id
+  role      = "roles/secretmanager.secretAccessor"
+  member    = "serviceAccount:${var.vendors_management_api_sa_email}"
+}
+
 resource "google_cloud_run_v2_service" "vendors_management_api" {
   name     = "vendors-management-api"
   location = "northamerica-northeast1"
@@ -19,6 +25,10 @@ resource "google_cloud_run_v2_service" "vendors_management_api" {
   template {
     service_account = var.vendors_management_api_sa_email
     encryption_key  = var.default_confidential_crypto_key_id
+
+    scaling {
+      max_instance_count = 3
+    }
 
     containers {
       image = "${docker_registry_image.vendors_management_api.name}@${docker_registry_image.vendors_management_api.sha256_digest}"
@@ -35,6 +45,15 @@ resource "google_cloud_run_v2_service" "vendors_management_api" {
         }
       }
 
+      env {
+        name = "GOOGLE_MAPS_API_KEY"
+        value_source {
+          secret_key_ref {
+            secret  = google_secret_manager_secret.google_maps_api_key.id
+            version = "latest"
+          }
+        }
+      }
       env {
         name  = "LOG_LEVEL"
         value = "info"
@@ -67,6 +86,14 @@ resource "google_cloud_run_v2_service" "vendors_management_api" {
             version = "latest"
           }
         }
+      }
+      env {
+        name  = "PGPOOL_MIN_CONNECTIONS"
+        value = 0
+      }
+      env {
+        name  = "PGPOOL_MAX_CONNECTIONS"
+        value = 5
       }
     }
 

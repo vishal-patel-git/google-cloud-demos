@@ -2,16 +2,27 @@ import express from 'express';
 import * as lb from '@google-cloud/logging-bunyan';
 import cors from 'cors';
 import helmet from 'helmet';
-import {db} from './db';
+import {Client as GoogleMapsClient} from '@googlemaps/google-maps-services-js';
+import {connect} from './db';
 import {HealthCheckRouter} from './health-check';
 import {VendorsService, VendorsRouter} from './vendors';
 import {errorHandler} from './error-handler';
 import {config} from './config';
 
 async function createApp() {
+  const db = connect();
+
   await db.migrate.latest();
 
-  const vendorsService = new VendorsService({db});
+  const googleMapsClient = new GoogleMapsClient();
+
+  const vendorsService = new VendorsService({
+    db,
+    googleMaps: {
+      client: googleMapsClient,
+      apiKey: config.googleMapsServices.apiKey,
+    },
+  });
 
   const healthCheckRouter = new HealthCheckRouter({db}).router;
 
@@ -21,6 +32,8 @@ async function createApp() {
 
   const {logger, mw} = await lb.express.middleware({
     level: config.logLevel,
+    redirectToStdout: true,
+    skipParentEntryForCloudRun: true,
   });
 
   app.use(mw);
@@ -47,7 +60,7 @@ async function createApp() {
     }
   );
 
-  return {app, logger};
+  return {app, db, logger};
 }
 
 export {createApp};

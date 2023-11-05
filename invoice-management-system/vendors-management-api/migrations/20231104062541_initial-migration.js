@@ -10,6 +10,7 @@ exports.up = async function (knex) {
         .defaultTo(knex.raw('gen_random_uuid()'));
       table.string('name').notNullable().unique();
       table.string('address').notNullable();
+      table.string('google_place_id').notNullable();
       table.timestamps(true, true);
     });
   }

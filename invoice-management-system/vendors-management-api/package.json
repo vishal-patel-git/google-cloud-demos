@@ -34,12 +34,14 @@
     "@types/cors": "^2.8.15",
     "@types/express": "^4.17.20",
     "@types/node": "20.8.2",
+    "@types/pg": "^8.10.7",
     "gts": "^5.2.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "~5.2.0"
   },
   "dependencies": {
     "@google-cloud/logging-bunyan": "^5.0.1",
+    "@googlemaps/google-maps-services-js": "^3.3.41",
     "bunyan": "^1.8.15",
     "celebrate": "^15.0.3",
     "cors": "^2.8.5",

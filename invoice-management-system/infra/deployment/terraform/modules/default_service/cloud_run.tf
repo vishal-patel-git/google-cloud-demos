@@ -14,6 +14,10 @@ resource "google_cloud_run_v2_service" "default_service" {
     service_account = var.default_service_sa_email
     encryption_key  = var.default_confidential_crypto_key_id
 
+    scaling {
+      max_instance_count = 4
+    }
+
     containers {
       image = "${docker_registry_image.default_service.name}@${docker_registry_image.default_service.sha256_digest}"
 

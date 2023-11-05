@@ -31,7 +31,7 @@ class ErrorResponse {
 
 class ErrorHandler {
   public async handleError(error: Error, req: Request, res: Response) {
-    req.log.error(error, error.message);
+    req.log.error(error);
 
     if (isCelebrateError(error)) {
       const errors = Array.from(error.details, ([, value]) => value.message);

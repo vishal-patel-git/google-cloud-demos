@@ -28,6 +28,34 @@ resource "google_vpc_access_connector" "trust_northamerica_northeast1" {
   }
 }
 
+# See https://cloud.google.com/run/docs/configuring/static-outbound-ip
+resource "google_compute_router" "trust_vpc_access_connector_northamerica_northeast1" {
+  name    = "vpc-conn-na-ne1-router"
+  network = google_compute_network.trust.name
+  region  = google_compute_subnetwork.trust_vpc_access_connector_northamerica_northeast1.region
+}
+
+resource "google_compute_address" "trust_vpc_access_connector_northamerica_northeast1" {
+  name   = "vpc-conn-na-ne1-static-ip-addr"
+  region = google_compute_subnetwork.trust_vpc_access_connector_northamerica_northeast1.region
+}
+
+resource "google_compute_router_nat" "trust_vpc_access_connector_northamerica_northeast1" {
+  name   = "vpc-conn-na-ne1-static-nat"
+  router = google_compute_router.trust_vpc_access_connector_northamerica_northeast1.name
+  region = google_compute_subnetwork.trust_vpc_access_connector_northamerica_northeast1.region
+
+  nat_ip_allocate_option = "MANUAL_ONLY"
+  nat_ips                = [google_compute_address.trust_vpc_access_connector_northamerica_northeast1.self_link]
+
+  source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
+  subnetwork {
+    name                    = google_compute_subnetwork.trust_vpc_access_connector_northamerica_northeast1.id
+    source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
+  }
+}
+
+# 
 resource "google_compute_global_address" "trust_private_ip_address" {
   name          = "vpc-peering-private-ip-address"
   purpose       = "VPC_PEERING"

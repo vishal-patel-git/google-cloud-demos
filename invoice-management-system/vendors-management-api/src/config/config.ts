@@ -3,6 +3,7 @@ import {NodeEnv} from '../common/enums';
 
 const envVarsSchema = Joi.object()
   .keys({
+    GOOGLE_MAPS_API_KEY: Joi.string().required(),
     LOG_LEVEL: Joi.string().valid('debug', 'info').required(),
     NODE_ENV: Joi.string()
       .valid(NodeEnv.Development, NodeEnv.Test, NodeEnv.Production)
@@ -12,6 +13,8 @@ const envVarsSchema = Joi.object()
     PGUSERNAME: Joi.string().required(),
     PGPASSWORD: Joi.string().required(),
     PGDATABASE: Joi.string().required(),
+    PGPOOL_MIN_CONNECTIONS: Joi.number().integer().required(),
+    PGPOOL_MAX_CONNECTIONS: Joi.number().integer().required(),
     PORT: Joi.number().integer().required(),
   })
   .unknown();
@@ -23,6 +26,9 @@ if (error) {
 }
 
 const config = {
+  googleMapsServices: {
+    apiKey: envVars.GOOGLE_MAPS_API_KEY,
+  },
   logLevel: envVars.LOG_LEVEL,
   nodeEnv: envVars.NODE_ENV,
   port: envVars.PORT,
@@ -32,6 +38,12 @@ const config = {
     username: envVars.PGUSERNAME,
     password: envVars.PGPASSWORD,
     name: envVars.PGDATABASE,
+    pool: {
+      connections: {
+        min: envVars.PGPOOL_MIN_CONNECTIONS,
+        max: envVars.PGPOOL_MAX_CONNECTIONS,
+      },
+    },
   },
 };
 
