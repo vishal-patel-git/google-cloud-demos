@@ -13,11 +13,6 @@ variable "default_service_cloud_run_service_name" {
   description = "Default Service Cloud Run service name."
 }
 
-variable "vendors_management_api_cloud_run_service_name" {
-  type        = string
-  description = "Vendors Management API Cloud Run service name."
-}
-
 variable "ssl_certificate" {
   type        = string
   description = "SSL certificate in PEM format."

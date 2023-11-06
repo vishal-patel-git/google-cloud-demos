@@ -37,11 +37,22 @@ class VendorsRouter {
       }
     );
 
+    router.get('/', async (req, res, next) => {
+      try {
+        const vendors = await this.options.vendorsService.listVendors();
+
+        return res.json(vendors);
+      } catch (err) {
+        return next(err);
+      }
+    });
+
     router.get('/:vendorId', async (req, res, next) => {
       try {
         const {vendorId} = req.params;
 
-        const vendor = await this.options.vendorsService.getVendor(vendorId);
+        const vendor =
+          await this.options.vendorsService.getVendorById(vendorId);
 
         return res.json(vendor);
       } catch (err) {

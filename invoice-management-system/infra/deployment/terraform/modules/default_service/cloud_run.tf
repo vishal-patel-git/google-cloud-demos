@@ -21,18 +21,6 @@ resource "google_cloud_run_v2_service" "default_service" {
     containers {
       image = "${docker_registry_image.default_service.name}@${docker_registry_image.default_service.sha256_digest}"
 
-      startup_probe {
-        http_get {
-          path = "/"
-        }
-      }
-
-      liveness_probe {
-        http_get {
-          path = "/"
-        }
-      }
-
       env {
         name  = "LOG_LEVEL"
         value = "info"

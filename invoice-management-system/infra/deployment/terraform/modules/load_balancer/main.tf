@@ -14,16 +14,6 @@ resource "google_compute_region_url_map" "default" {
   path_matcher {
     name            = "allpaths"
     default_service = google_compute_region_backend_service.default_service.id
-
-    path_rule {
-      paths   = ["/api/vendors-management/v1", "/api/vendors-management/v1/*"]
-      service = google_compute_region_backend_service.vendors_management_api.id
-      route_action {
-        url_rewrite {
-          path_prefix_rewrite = "/"
-        }
-      }
-    }
   }
 }
 

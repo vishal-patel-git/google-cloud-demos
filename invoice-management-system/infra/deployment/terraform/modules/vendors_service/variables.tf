@@ -13,7 +13,7 @@ variable "trust_vpc_access_connector_northamerica_northeast1_id" {
   description = "Trust northamerica-northeast1 VPC Access Connector ID."
 }
 
-variable "vendors_management_api_sa_email" {
+variable "vendors_service_sa_email" {
   type        = string
-  description = "Vendors Management API Service Account email."
+  description = "Vendors Service Service Account email."
 }

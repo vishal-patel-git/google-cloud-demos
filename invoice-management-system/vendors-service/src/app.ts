@@ -1,8 +1,6 @@
 import express from 'express';
 import * as lb from '@google-cloud/logging-bunyan';
-import cors from 'cors';
-import helmet from 'helmet';
-import {Client as GoogleMapsClient} from '@googlemaps/google-maps-services-js';
+import {AddressValidationClient} from '@googlemaps/addressvalidation';
 import {connect} from './db';
 import {HealthCheckRouter} from './health-check';
 import {VendorsService, VendorsRouter} from './vendors';
@@ -14,13 +12,14 @@ async function createApp() {
 
   await db.migrate.latest();
 
-  const googleMapsClient = new GoogleMapsClient();
+  const addressvalidationClient = new AddressValidationClient();
 
   const vendorsService = new VendorsService({
     db,
-    googleMaps: {
-      client: googleMapsClient,
-      apiKey: config.googleMapsServices.apiKey,
+    google: {
+      addressValidation: {
+        client: addressvalidationClient,
+      },
     },
   });
 
@@ -37,10 +36,6 @@ async function createApp() {
   });
 
   app.use(mw);
-
-  app.use(helmet());
-
-  app.use(cors());
 
   app.use(express.json());
 

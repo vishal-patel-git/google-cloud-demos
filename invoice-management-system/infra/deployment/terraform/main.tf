@@ -55,13 +55,13 @@ module "default_service" {
   default_service_sa_email           = module.iam.default_service_sa_email
 }
 
-module "vendors_management_api" {
-  source = "./modules/vendors_management_api"
+module "vendors_service" {
+  source = "./modules/vendors_service"
 
   default_confidential_crypto_key_id                    = module.kms.default_confidential_crypto_key_id
   trust_network_name                                    = module.network.trust_network_name
   trust_vpc_access_connector_northamerica_northeast1_id = module.network.trust_vpc_access_connector_northamerica_northeast1_id
-  vendors_management_api_sa_email                       = module.iam.vendors_management_api_sa_email
+  vendors_service_sa_email                              = module.iam.vendors_service_sa_email
 }
 
 resource "google_compute_address" "load_balancer" {
@@ -72,11 +72,10 @@ resource "google_compute_address" "load_balancer" {
 module "load_balancer" {
   source = "./modules/load_balancer"
 
-  default_confidential_crypto_key_id            = module.kms.default_confidential_crypto_key_id
-  trust_network_name                            = module.network.trust_network_name
-  default_service_cloud_run_service_name        = module.default_service.default_service_cloud_run_service_name
-  vendors_management_api_cloud_run_service_name = module.vendors_management_api.vendors_management_api_cloud_run_service_name
-  ssl_certificate                               = var.ssl_certificate
-  ssl_certificate_private_key                   = var.ssl_certificate_private_key
-  google_compute_address_id                     = google_compute_address.load_balancer.id
+  default_confidential_crypto_key_id     = module.kms.default_confidential_crypto_key_id
+  trust_network_name                     = module.network.trust_network_name
+  default_service_cloud_run_service_name = module.default_service.default_service_cloud_run_service_name
+  ssl_certificate                        = var.ssl_certificate
+  ssl_certificate_private_key            = var.ssl_certificate_private_key
+  google_compute_address_id              = google_compute_address.load_balancer.id
 }

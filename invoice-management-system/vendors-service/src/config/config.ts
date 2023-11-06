@@ -3,7 +3,6 @@ import {NodeEnv} from '../common/enums';
 
 const envVarsSchema = Joi.object()
   .keys({
-    GOOGLE_MAPS_API_KEY: Joi.string().required(),
     LOG_LEVEL: Joi.string().valid('debug', 'info').required(),
     NODE_ENV: Joi.string()
       .valid(NodeEnv.Development, NodeEnv.Test, NodeEnv.Production)
@@ -26,9 +25,6 @@ if (error) {
 }
 
 const config = {
-  googleMapsServices: {
-    apiKey: envVars.GOOGLE_MAPS_API_KEY,
-  },
   logLevel: envVars.LOG_LEVEL,
   nodeEnv: envVars.NODE_ENV,
   port: envVars.PORT,
