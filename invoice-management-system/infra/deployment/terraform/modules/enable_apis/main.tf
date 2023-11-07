@@ -10,7 +10,6 @@ locals {
     "containeranalysis.googleapis.com",
     "iam.googleapis.com",
     "monitoring.googleapis.com",
-    "places-backend.googleapis.com",
     "run.googleapis.com",
     "secretmanager.googleapis.com",
     "servicenetworking.googleapis.com",

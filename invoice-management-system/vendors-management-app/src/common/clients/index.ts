@@ -1,0 +1,1 @@
+export {VendorsClient} from './vendors';

@@ -37,15 +37,53 @@ class VendorsRouter {
       }
     );
 
-    router.get('/', async (req, res, next) => {
-      try {
-        const vendors = await this.options.vendorsService.listVendors();
+    router.get(
+      '/',
+      celebrate({
+        [Segments.QUERY]: Joi.object().keys({
+          orderBy: Joi.string(),
+        }),
+      }),
+      async (req, res, next) => {
+        try {
+          const orderByQueryParam = req.query.orderBy as string;
 
-        return res.json(vendors);
-      } catch (err) {
-        return next(err);
+          let orderBy: {
+            field: 'name';
+            direction: 'asc' | 'desc';
+          }[] = [];
+
+          if (orderByQueryParam) {
+            orderBy = orderByQueryParam.split(',').map(orderByClause => {
+              const [field, direction] = orderByClause.split(' ');
+
+              if (field !== 'name') {
+                throw new Error();
+              }
+
+              if (direction !== 'asc' && direction !== 'desc') {
+                throw new RangeError(
+                  `Invalid direction in orderBy clause ${orderByClause}`
+                );
+              }
+
+              return {
+                field,
+                direction,
+              };
+            });
+          }
+
+          const vendors = await this.options.vendorsService.listVendors({
+            orderBy,
+          });
+
+          return res.json(vendors);
+        } catch (err) {
+          return next(err);
+        }
       }
-    });
+    );
 
     router.get('/:vendorId', async (req, res, next) => {
       try {

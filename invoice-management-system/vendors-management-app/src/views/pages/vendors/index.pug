@@ -1,0 +1,14 @@
+extends ../../layouts/layout.pug
+
+block content
+  h1 Vendors List
+  table
+    thead
+      tr
+        th Name
+        th Address
+    tbody
+      each vendor in vendors
+        tr
+          td=vendor.name
+          td=vendor.address

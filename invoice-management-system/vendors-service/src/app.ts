@@ -39,9 +39,9 @@ async function createApp() {
 
   app.use(express.json());
 
-  app.use('/', healthCheckRouter);
+  app.use('/healthz', healthCheckRouter);
 
-  app.use('/vendors', vendorsRouter);
+  app.use('/', vendorsRouter);
 
   app.use(
     async (

@@ -29,13 +29,13 @@ resource "google_cloud_run_v2_service" "vendors_service" {
 
       startup_probe {
         http_get {
-          path = "/"
+          path = "/healthz"
         }
       }
 
       liveness_probe {
         http_get {
-          path = "/"
+          path = "/healthz"
         }
       }
 
@@ -92,4 +92,11 @@ resource "google_cloud_run_v2_service" "vendors_service" {
     google_artifact_registry_repository_iam_member.vendors_service_sa_vendors_service_repository,
     google_secret_manager_secret_iam_member.vendors_service_sa_vendors_service_user_password
   ]
+}
+
+resource "google_cloud_run_service_iam_member" "vendors_service_allow_unauthenticated" {
+  location = google_cloud_run_v2_service.vendors_service.location
+  service  = google_cloud_run_v2_service.vendors_service.name
+  role     = "roles/run.invoker"
+  member   = "allUsers"
 }
