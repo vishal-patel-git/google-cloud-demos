@@ -26,7 +26,7 @@ async function createApp() {
 
   app.use(mw);
 
-  app.use(express.json());
+  app.use(express.urlencoded({extended: true}));
 
   app.all('/', (req, res) => {
     return res.redirect(StatusCodes.MOVED_PERMANENTLY, '/vendors');

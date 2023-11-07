@@ -17,6 +17,15 @@ interface ListVendorsOptions {
 class VendorsClient {
   constructor(private readonly options: VendorsOptions) {}
 
+  async createVendor(name: string, address: string): Promise<Vendor> {
+    const {data: vendor} = await axios.post(this.options.baseUrl, {
+      name,
+      address,
+    });
+
+    return vendor;
+  }
+
   async listVendors(options?: ListVendorsOptions): Promise<Vendor[]> {
     const params: {orderBy?: string} = {};
 
