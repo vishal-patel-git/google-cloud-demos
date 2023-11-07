@@ -61,10 +61,10 @@ class VendorsService {
     }
   }
 
-  async getVendorById(id: string): Promise<Vendor> {
+  async getVendorById(vendorId: string): Promise<Vendor> {
     const [vendor] = await this.options
       .db<Vendor>(this.vendorsTable)
-      .where({id});
+      .where({id: vendorId});
 
     return vendor;
   }
@@ -86,8 +86,8 @@ class VendorsService {
       });
   }
 
-  async deleteVendor(id: string): Promise<void> {
-    await this.options.db(this.vendorsTable).where('id', id).del();
+  async deleteVendorById(vendorId: string): Promise<void> {
+    await this.options.db(this.vendorsTable).where('id', vendorId).del();
   }
 }
 

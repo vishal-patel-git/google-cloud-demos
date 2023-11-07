@@ -1,1 +1,2 @@
-export {VendorsClient} from './vendors';
+export {VendorsClient} from './vendors-client';
+export {ErrorResponse} from './errors';

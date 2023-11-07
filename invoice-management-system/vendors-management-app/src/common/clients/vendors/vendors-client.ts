@@ -1,5 +1,6 @@
-import axios from 'axios';
+import axios, {isAxiosError} from 'axios';
 import {Vendor} from './models';
+import {ErrorResponse} from './errors';
 
 interface VendorsOptions {
   baseUrl: string;
@@ -18,12 +19,22 @@ class VendorsClient {
   constructor(private readonly options: VendorsOptions) {}
 
   async createVendor(name: string, address: string): Promise<Vendor> {
-    const {data: vendor} = await axios.post(this.options.baseUrl, {
-      name,
-      address,
-    });
+    try {
+      const {data: vendor} = await axios.post(this.options.baseUrl, {
+        name,
+        address,
+      });
 
-    return vendor;
+      return vendor;
+    } catch (err) {
+      if (isAxiosError(err)) {
+        throw new ErrorResponse(
+          err.response?.data.error.code,
+          err.response?.data.error.message
+        );
+      }
+      throw err;
+    }
   }
 
   async listVendors(options?: ListVendorsOptions): Promise<Vendor[]> {
@@ -40,6 +51,10 @@ class VendorsClient {
     });
 
     return listVendorsResponse;
+  }
+
+  async deleteVendorById(vendorId: string): Promise<void> {
+    await axios.delete(`${this.options.baseUrl}/${vendorId}`);
   }
 
   private orderByClauseToQueryParamClause(

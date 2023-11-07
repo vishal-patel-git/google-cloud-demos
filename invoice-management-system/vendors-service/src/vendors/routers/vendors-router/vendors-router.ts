@@ -102,7 +102,7 @@ class VendorsRouter {
       try {
         const {vendorId} = req.params;
 
-        await this.options.vendorsService.deleteVendor(vendorId);
+        await this.options.vendorsService.deleteVendorById(vendorId);
 
         return res.status(StatusCodes.NO_CONTENT).json({});
       } catch (err) {

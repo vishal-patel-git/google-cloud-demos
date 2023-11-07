@@ -2,7 +2,7 @@ import path from 'path';
 import express from 'express';
 import * as lb from '@google-cloud/logging-bunyan';
 import {StatusCodes} from 'http-status-codes';
-import {VendorsClient} from './common/clients';
+import {VendorsClient} from './common/clients/vendors';
 import {VendorsRouter} from './vendors';
 import {config} from './config';
 
@@ -20,6 +20,8 @@ async function createApp() {
     redirectToStdout: true,
     skipParentEntryForCloudRun: true,
   });
+
+  app.use(express.static(path.join(__dirname, 'public')));
 
   app.set('views', path.join(__dirname, 'views', 'pages'));
   app.set('view engine', 'pug');

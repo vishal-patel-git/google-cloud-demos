@@ -9,5 +9,8 @@ block content
       input(id="name" type="text" name="name" minlength="1")
     div
       label(for="address") Address 
-      input(id="address" type="text" name="address" minlength="1")
+      input(id="address" type="textarea" name="address" minlength="1")
+    ul
+      each error in errors
+        li=error
     button Add

@@ -1,5 +1,6 @@
 import {Router} from 'express';
-import {VendorsClient} from '../../../common/clients';
+import {VendorsClient, ErrorResponse} from '../../../common/clients/vendors';
+import {StatusCodes} from 'http-status-codes';
 
 interface VendorsRouterOptions {
   vendorsClient: VendorsClient;
@@ -30,7 +31,7 @@ class VendorsRouter {
 
     router.get('/add', async (req, res, next) => {
       try {
-        return res.render('vendors/add', {title: 'Add Vendor'});
+        return res.render('vendors/add', {title: 'Add Vendor', errors: []});
       } catch (err) {
         return next(err);
       }
@@ -40,9 +41,29 @@ class VendorsRouter {
       try {
         const {name, address} = req.body;
 
-        await this.options.vendorsClient.createVendor(name, address);
+        try {
+          await this.options.vendorsClient.createVendor(name, address);
+        } catch (err) {
+          if (err instanceof ErrorResponse) {
+            return res.render('vendors/add', {errors: [err.message]});
+          }
+          req.log.error(err);
+          throw err;
+        }
 
         return res.redirect('/vendors');
+      } catch (err) {
+        return next(err);
+      }
+    });
+
+    router.delete('/:vendorId', async (req, res, next) => {
+      try {
+        const {vendorId} = req.params;
+
+        await this.options.vendorsClient.deleteVendorById(vendorId);
+
+        return res.sendStatus(StatusCodes.NO_CONTENT);
       } catch (err) {
         return next(err);
       }
