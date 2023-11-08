@@ -48,13 +48,6 @@ module "network" {
   environment  = var.environment
 }
 
-module "default_service" {
-  source = "./modules/default_service"
-
-  default_confidential_crypto_key_id = module.kms.default_confidential_crypto_key_id
-  default_service_sa_email           = module.iam.default_service_sa_email
-}
-
 module "vendors_service" {
   source = "./modules/vendors_service"
 
@@ -83,7 +76,6 @@ module "load_balancer" {
 
   default_confidential_crypto_key_id            = module.kms.default_confidential_crypto_key_id
   trust_network_name                            = module.network.trust_network_name
-  default_service_cloud_run_service_name        = module.default_service.default_service_cloud_run_service_name
   vendors_management_app_cloud_run_service_name = module.vendors_management_app.name
   ssl_certificate                               = var.ssl_certificate
   ssl_certificate_private_key                   = var.ssl_certificate_private_key

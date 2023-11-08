@@ -8,11 +8,6 @@ variable "trust_network_name" {
   description = "Trust VPC network name."
 }
 
-variable "default_service_cloud_run_service_name" {
-  type        = string
-  description = "Default Service Cloud Run service name."
-}
-
 variable "vendors_management_app_cloud_run_service_name" {
   type        = string
   description = "Vendors Management App Cloud Run service name."

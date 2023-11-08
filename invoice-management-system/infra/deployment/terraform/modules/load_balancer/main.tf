@@ -4,17 +4,7 @@ locals {
 
 resource "google_compute_region_url_map" "default" {
   name            = "${local.lb_name}-lb-urlmap"
-  default_service = google_compute_region_backend_service.default_service.id
-
-  host_rule {
-    hosts        = ["*"]
-    path_matcher = "allpaths"
-  }
-
-  path_matcher {
-    name            = "allpaths"
-    default_service = google_compute_region_backend_service.vendors_management_app_service.id
-  }
+  default_service = google_compute_region_backend_service.vendors_management_app_service.id
 }
 
 resource "google_compute_region_ssl_certificate" "default" {
