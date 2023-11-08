@@ -3,6 +3,7 @@ import express from 'express';
 import * as lb from '@google-cloud/logging-bunyan';
 import {StatusCodes} from 'http-status-codes';
 import {VendorsClient} from './common/clients/vendors';
+import { HealthCheckRouter } from './health-check';
 import {VendorsRouter} from './vendors';
 import {config} from './config';
 
@@ -10,6 +11,8 @@ async function createApp() {
   const vendorsClient = new VendorsClient({
     baseUrl: config.vendorsService.baseUrl,
   });
+
+  const healthCheckRouter = new HealthCheckRouter().router;
 
   const vendorsRouter = new VendorsRouter({vendorsClient}).router;
 
@@ -33,6 +36,8 @@ async function createApp() {
   app.all('/', (req, res) => {
     return res.redirect(StatusCodes.MOVED_PERMANENTLY, '/vendors');
   });
+
+  app.use('/healthz', healthCheckRouter);
 
   app.use('/vendors', vendorsRouter);
 

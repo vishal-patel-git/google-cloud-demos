@@ -13,7 +13,7 @@ resource "google_compute_region_url_map" "default" {
 
   path_matcher {
     name            = "allpaths"
-    default_service = google_compute_region_backend_service.default_service.id
+    default_service = google_compute_region_backend_service.vendors_management_app_service.id
   }
 }
 

@@ -3,7 +3,7 @@ extends ../../layouts/layout.pug
 block content
   h1 Vendors
   a(href="/vendors/add") Add Vendor
-  button(id="delete-vendor-button" type="button") Delete
+  button(id="delete-vendor-button" type="button" disabled) Delete
   dialog(id="delete-vendor-dialog") 
     p(id="delete-vendor-dialog-title")
     button(id="cancel-delete-vendor-button" type="button") Cancel

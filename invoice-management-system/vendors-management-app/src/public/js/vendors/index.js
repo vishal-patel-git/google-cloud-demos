@@ -21,13 +21,19 @@ for (const vendorCheckbox of vendorCheckboxes) {
       selectedVendorIds.delete(this.dataset.id);
     }
 
-    if (selectedVendorIds.size === 1) {
-      const vendorName = document.querySelector(
-        `input[type=checkbox][data-id="${this.dataset.id}"]`
-      ).dataset.name;
-      deleteVendorDialogTitle.textContent = `Delete ${vendorName}?`;
+    if (selectedVendorIds.size === 0) {
+      deleteVendorButton.disabled = true;
     } else {
-      deleteVendorDialogTitle.textContent = 'Delete Vendors?';
+      deleteVendorButton.disabled = false;
+
+      if (selectedVendorIds.size === 1) {
+        const vendorName = document.querySelector(
+          `input[type=checkbox][data-id="${this.dataset.id}"]`
+        ).dataset.name;
+        deleteVendorDialogTitle.textContent = `Delete ${vendorName}?`;
+      } else {
+        deleteVendorDialogTitle.textContent = 'Delete Vendors?';
+      }
     }
   });
 }

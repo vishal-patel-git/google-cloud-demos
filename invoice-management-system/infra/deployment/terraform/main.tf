@@ -64,6 +64,15 @@ module "vendors_service" {
   vendors_service_sa_email                              = module.iam.vendors_service_sa_email
 }
 
+module "vendors_management_app" {
+  source = "./modules/vendors_management_app"
+
+  default_confidential_crypto_key_id                    = module.kms.default_confidential_crypto_key_id
+  vendors_management_app_sa_email                       = module.iam.vendors_management_app_sa_email
+  trust_vpc_access_connector_northamerica_northeast1_id = module.network.trust_vpc_access_connector_northamerica_northeast1_id
+  vendors_service_name                                  = module.vendors_service.name
+}
+
 resource "google_compute_address" "load_balancer" {
   name         = "invoice-management-system-lb-address"
   network_tier = "STANDARD"
@@ -72,10 +81,11 @@ resource "google_compute_address" "load_balancer" {
 module "load_balancer" {
   source = "./modules/load_balancer"
 
-  default_confidential_crypto_key_id     = module.kms.default_confidential_crypto_key_id
-  trust_network_name                     = module.network.trust_network_name
-  default_service_cloud_run_service_name = module.default_service.default_service_cloud_run_service_name
-  ssl_certificate                        = var.ssl_certificate
-  ssl_certificate_private_key            = var.ssl_certificate_private_key
-  google_compute_address_id              = google_compute_address.load_balancer.id
+  default_confidential_crypto_key_id            = module.kms.default_confidential_crypto_key_id
+  trust_network_name                            = module.network.trust_network_name
+  default_service_cloud_run_service_name        = module.default_service.default_service_cloud_run_service_name
+  vendors_management_app_cloud_run_service_name = module.vendors_management_app.name
+  ssl_certificate                               = var.ssl_certificate
+  ssl_certificate_private_key                   = var.ssl_certificate_private_key
+  google_compute_address_id                     = google_compute_address.load_balancer.id
 }
