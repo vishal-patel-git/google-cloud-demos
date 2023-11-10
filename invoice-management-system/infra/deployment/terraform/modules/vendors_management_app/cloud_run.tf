@@ -64,3 +64,10 @@ resource "google_cloud_run_service_iam_member" "vendors_management_app_allow_una
   role     = "roles/run.invoker"
   member   = "allUsers"
 }
+
+resource "google_cloud_run_service_iam_member" "vendors_management_app_iap_sa" {
+  location = google_cloud_run_v2_service.vendors_management_app.location
+  service  = google_cloud_run_v2_service.vendors_management_app.name
+  role     = "roles/run.invoker"
+  member   = "serviceAccount:${var.iap_sa_email}"
+}

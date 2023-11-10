@@ -9,6 +9,7 @@ locals {
     "compute.googleapis.com",
     "containeranalysis.googleapis.com",
     "iam.googleapis.com",
+    "iap.googleapis.com",
     "monitoring.googleapis.com",
     "run.googleapis.com",
     "secretmanager.googleapis.com",

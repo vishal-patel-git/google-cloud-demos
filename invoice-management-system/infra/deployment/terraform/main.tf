@@ -61,7 +61,10 @@ module "vendors_management_app" {
   source = "./modules/vendors_management_app"
 
   default_confidential_crypto_key_id                    = module.kms.default_confidential_crypto_key_id
+  iap_sa_email                                          = module.iam.iap_sa_email
   vendors_management_app_sa_email                       = module.iam.vendors_management_app_sa_email
+  vendors_management_app_users_group                    = var.vendors_management_app_users_group
+  vendors_management_app_support_email                  = var.vendors_management_app_support_email
   trust_vpc_access_connector_northamerica_northeast1_id = module.network.trust_vpc_access_connector_northamerica_northeast1_id
   vendors_service_name                                  = module.vendors_service.name
 }
@@ -77,6 +80,9 @@ module "load_balancer" {
   default_confidential_crypto_key_id            = module.kms.default_confidential_crypto_key_id
   trust_network_name                            = module.network.trust_network_name
   vendors_management_app_cloud_run_service_name = module.vendors_management_app.name
+  vendors_management_app_iap_client_id          = module.vendors_management_app.iap_client_id
+  vendors_management_app_iap_client_secret      = module.vendors_management_app.iap_client_secret
+  vendors_management_app_users_group            = var.vendors_management_app_users_group
   ssl_certificate                               = var.ssl_certificate
   ssl_certificate_private_key                   = var.ssl_certificate_private_key
   google_compute_address_id                     = google_compute_address.load_balancer.id

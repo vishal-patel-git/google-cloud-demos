@@ -1,3 +1,7 @@
+output "iap_sa_email" {
+  value = google_project_service_identity.iap_sa.email
+}
+
 output "vendors_service_sa_email" {
   value = google_service_account.vendors_service.email
 }
