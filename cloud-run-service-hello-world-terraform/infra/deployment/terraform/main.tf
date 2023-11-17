@@ -79,7 +79,8 @@ module "regional_external_application_load_balancer" {
   google_compute_address_id   = google_compute_address.regional_external_application_load_balancer.id
   api_cloud_run_service_name = "hello"
   ssl_certificate = "${acme_certificate.certificate.certificate_pem}"
-  ssl_certificate_private_key = "${acme_certificate.certificate.private_key_pem}"
+  ssl_certificate_private_key = "${tls_private_key.cert_private_key.private_key_pem}"
+#   ssl_certificate_private_key = "${acme_certificate.certificate.private_key_pem}"
 #   api_cloud_run_service_name  = module.api.api_cloud_run_service_name
   depends_on = [
     acme_certificate.certificate,

@@ -15,7 +15,7 @@ resource "tls_cert_request" "req" {
 #   key_algorithm   = "RSA"
   private_key_pem = tls_private_key.cert_private_key.private_key_pem
   subject {
-    common_name = "certlb.cloudns.org"
+    common_name = "*.gcp.yoppworks.com"
     organization = var.company_name
   }
 }
@@ -29,8 +29,8 @@ resource "acme_certificate" "certificate" {
   dns_challenge {
     provider = "gcloud"
     config = {
-      GCE_SERVICE_ACCOUNT_FILE = "service_account.json"
-      GCE_PROJECT              = "lb-cert"
+    #   GCE_SERVICE_ACCOUNT_FILE = "service_account.json"
+      GCE_PROJECT              = "dns-delegation-404617"
     #   GCE_POLLING_INTERVAL = 120
     #   GCE_PROPAGATION_TIMEOUT = 120
     }
