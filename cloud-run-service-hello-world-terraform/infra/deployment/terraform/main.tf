@@ -65,6 +65,9 @@ module "api" {
 resource "google_compute_address" "regional_external_application_load_balancer" {
   name         = "regional-external-application-lb-address"
   network_tier = "STANDARD"
+  depends_on = [
+    module.network
+  ]
 }
 
 module "regional_external_application_load_balancer" {
@@ -78,5 +81,8 @@ module "regional_external_application_load_balancer" {
   ssl_certificate = "${acme_certificate.certificate.certificate_pem}"
   ssl_certificate_private_key = "${acme_certificate.certificate.private_key_pem}"
 #   api_cloud_run_service_name  = module.api.api_cloud_run_service_name
-
+  depends_on = [
+    acme_certificate.certificate,
+    module.network
+  ]
 }
